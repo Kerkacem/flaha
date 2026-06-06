@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: flaha-api
+    env: docker
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AI_API_KEY
+        sync: false
+      - key: AI_BASE_URL
+        value: https://integrate.api.nvidia.com/v1
+      - key: AI_MODEL
+        value: meta/llama-3.1-70b-instruct
+      - key: BARIDI_MOB_API_KEY
+        sync: false
+      - key: YALIDINE_API_KEY
+        sync: false
+      - key: YALIDINE_CLIENT_ID
+        sync: false
+      - key: WHATSAPP_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_ID
+        sync: false
+      - key: USSD_API_KEY
+        sync: false
+      - key: APP_NAME
+        value: فلاحة
+      - key: VERSION
+        value: 0.1.0
+      - key: DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        value: '["http://localhost:3000","http://localhost:5173","http://localhost:8081","http://127.0.0.1:8000","http://127.0.0.1:3000"]'
+      - key: RATE_LIMIT_REQUESTS
+        value: "100"
+      - key: RATE_LIMIT_WINDOW
+        value: "60"
+
+databases:
+  - name: flaha-db
+    databaseName: flaha
+    user: flaha
+    plan: free
+    region: frankfurt
