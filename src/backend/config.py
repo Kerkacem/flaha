@@ -47,6 +47,15 @@ class Settings(BaseSettings):
 
     DATA_DIR: Path = Path("data")
 
+    # CORS
+    CORS_ORIGINS: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:8081",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:3000",
+    ]
+
     # ─── Computed ────────────────────────────────────────
     @property
     def database_url_async(self) -> str:
