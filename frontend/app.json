@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "فلاحة",
+    "slug": "flaha-mobile",
+    "version": "0.1.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#16a34a",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.flaha.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#16a34a"
+      },
+      "package": "com.flaha.mobile",
+      "intentFilters": [{
+        "action": "VIEW",
+        "autoVerify": true,
+        "data": [{"scheme": "flaha"}],
+        "category": ["BROWSABLE", "DEFAULT"]
+      }]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": []
+  }
+}

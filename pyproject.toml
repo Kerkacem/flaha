@@ -1,0 +1,53 @@
+[project]
+name = "flaha"
+version = "0.1.0"
+description = "الوكيل الفلاحي الذكي للجزائر — Intelligent Agricultural Agent for Algeria (100% Free Tier)"
+authors = [{ name = "Flaha Team" }]
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "sqlalchemy[asyncio]>=2.0.0",
+    "aiosqlite>=0.20.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "httpx>=0.27.0",
+    "python-multipart>=0.0.12",
+    "pillow>=11.0.0",
+    "python-dotenv>=1.0.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "psutil>=6.0.0",
+    "openai>=1.0.0",
+    "typer>=0.12.0",
+    "alembic>=1.13.0",
+    "mcp>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ruff",
+    "mypy",
+    "ipython",
+    "watchfiles",
+]
+test = [
+    "pytest-cov>=5.0.0",
+    "httpx>=0.27.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+asyncio_mode = "auto"

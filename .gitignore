@@ -1,0 +1,58 @@
+# .gitignore
+
+# Environment
+.env
+.env.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (track seed files, ignore sqlite db + WAL/SHM)
+data/
+!data/.gitkeep
+!data/seed/
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Logs
+*.log
+logs/
+
+# Models (downloaded later)
+models/
+!models/.gitkeep
+
+# Generated
+htmlcov/
+.coverage
+coverage/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/.expo/
+frontend/dist/
+frontend/build/

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "nvidia": {
+      "name": "NVIDIA",
+      "api": "openai",
+      "env": ["NVIDIA_API_KEY"],
+      "options": {
+        "baseURL": "https://integrate.api.nvidia.com/v1"
+      },
+      "models": {
+        "minimaxai/minimax-m2.7": {
+          "id": "minimaxai/minimax-m2.7",
+          "name": "MiniMax M2.7",
+          "family": "minimax",
+          "limit": { "context": 128000, "input": 128000, "output": 8192 },
+          "cost": { "input": 0.0, "output": 0.0 }
+        }
+      }
+    }
+  },
+  "skills": {
+    "paths": ["./skills"]
+  },
+  "agent": {
+    "flaha-marketplace": {
+      "description": "وكيل سوق الفلاح — يربط الفلاحين بالمشترين مباشرة بدون وسيط",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل سوق الفلاحة الجزائري. مهمتك ربط الفلاحين بالمشترين. استعمل tools: whatsapp-messenger, payment-baridi, maps-location. تعامل بالدارجة الجزائرية."
+    },
+    "flaha-advisory": {
+      "description": "وكيل الإرشاد الزراعي — يشخص أمراض النباتات وينصح الفلاحين بالدارجة",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل الإرشاد الزراعي الذكي. تشخص أمراض النبات من الصور وتقدم نصائح فلاحية بالدارجة. استعمل tools: image-analyzer, weather-api."
+    },
+    "flaha-finance": {
+      "description": "وكيل التمويل والتأمين الفلاحي — يربط الفلاحين بالبنوك والتأمين",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل التمويل الفلاحي. تبني سجلاً رقمياً للفلاح وتربطه بالبنوك الجزائرية (BADR, CPA) للقروض والتأمين."
+    },
+    "flaha-logistics": {
+      "description": "وكيل اللوجستيك — يدير توصيل المنتجات الفلاحية من الفلاح للمشتري",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل اللوجستيك. تدير توصيل المنتجات الفلاحية. استعمل tools: maps-location, whatsapp-messenger. التكامل مع Yalidine."
+    },
+    "flaha-marketing": {
+      "description": "وكيل التسويق — ينشئ إعلانات تلقائية لمنتجات الفلاحين",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل التسويق. تحول الفلاحين إلى مسوقين رقميين. تنشئ إعلانات تلقائية وتستهدف الجالية بالخارج."
+    },
+    "flaha-gov-support": {
+      "description": "وكيل الدعم الحكومي — يساعد الفلاحين في الحصول على دعم الدولة",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل الدعم الحكومي. تساعد الفلاحين في برامج الدعم (FNDIA, FGVA). تملأ الاستمارات وتتابع الطلبات."
+    },
+    "flaha-diaspora": {
+      "description": "وكيل الجالية بالخارج — يربط 6 ملايين جزائري بالمنتجات البلدية",
+      "mode": "subagent",
+      "model": "nvidia/minimaxai/minimax-m2.7",
+      "prompt": "أنت وكيل الجالية. تربط الجزائريين في الخارج بالمنتجات الفلاحية البلدية. تدير الطلبات الدولية والشحن."
+    }
+  },
+  "mcp": {
+    "whatsapp-messenger": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "whatsapp"],
+      "enabled": true
+    },
+    "image-analyzer": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "image"],
+      "enabled": true
+    },
+    "weather-api": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "weather"],
+      "enabled": true
+    },
+    "payment-baridi": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "payment"],
+      "enabled": true
+    },
+    "ussd-gateway": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "ussd"],
+      "enabled": true
+    },
+    "maps-location": {
+      "type": "local",
+      "command": ["python", "tools/mcp_server.py", "maps"],
+      "enabled": true
+    }
+  },
+  "command": {
+    "flaha:marketplace": {
+      "description": "تشغيل وكيل سوق الفلاح — بيع وشراء المنتجات الفلاحية",
+      "agent": "flaha-marketplace",
+      "template": "شغّل وكيل سوق الفلاحة. اسأل المستخدم: هل تريد بيع أم شراء؟"
+    },
+    "flaha:advisory": {
+      "description": "تشغيل وكيل الإرشاد الزراعي — تشخيص أمراض النباتات",
+      "agent": "flaha-advisory",
+      "template": "شغّل وكيل الإرشاد الزراعي. اطلب من المستخدم إرسال صورة نباته."
+    },
+    "flaha:finance": {
+      "description": "تشغيل وكيل التمويل الفلاحي — قروض وتأمين",
+      "agent": "flaha-finance",
+      "template": "شغّل وكيل التمويل. اسأل الفلاح: قرض أم تأمين أم دعم حكومي؟"
+    },
+    "flaha:logistics": {
+      "description": "تشغيل وكيل التوصيل — من الفلاح للمشتري",
+      "agent": "flaha-logistics",
+      "template": "شغّل وكيل اللوجستيك. اسأل المستخدم عن عنوان التوصيل."
+    },
+    "flaha:marketing": {
+      "description": "تشغيل وكيل التسويق — إعلانات تلقائية للمنتجات",
+      "agent": "flaha-marketing",
+      "template": "شغّل وكيل التسويق. اسأل الفلاح عن منتوجه."
+    },
+    "flaha:gov-support": {
+      "description": "تشغيل وكيل الدعم الحكومي — مساعدة في ملفات الدعم",
+      "agent": "flaha-gov-support",
+      "template": "شغّل وكيل الدعم الحكومي. اسأل الفلاح عن نوع الدعم الذي يحتاجه."
+    },
+    "flaha:diaspora": {
+      "description": "تشغيل وكيل الجالية — ربط الجزائريين بالخارج بالمنتجات البلدية",
+      "agent": "flaha-diaspora",
+      "template": "شغّل وكيل الجالية. اسأل المستخدم عن المنتج الذي يريد."
+    }
+  }
+}
